@@ -10,14 +10,14 @@ class Apple;
 #define LINE_OBSTRUCT_COL 15
 #define LINE_OBSTRUCT_RAW 30
 
-#define OBSTRUCT_SPACE_D 40.0f// 障害物の縦間隔.
-#define OBSTRUCT_SPACE_W 15.0f // 障害物の横間隔.
+#define OBSTRUCT_SPACE_D 40.0f	// 障害物の縦間隔.
+#define OBSTRUCT_SPACE_W 15.0f	// 障害物の横間隔.
 
 class Enemy
 {
 public:
-	Enemy();
-	~Enemy();
+	Enemy();				//コンストラクタ
+	~Enemy();			    //デストラクタ
 
 	void Update();			// 更新.
 
@@ -26,34 +26,28 @@ public:
 	// モデルハンドルの取得.
 	int GetModelHandle() { return modelHandle; }
 
-	//ループ用
-	int i;
-
-	void CreateEnemy();			//エネミー生成
-	void DestroyEnemys();		// エネミー削除.
+	void CreateEnemy();				//エネミー生成
+	void DestroyEnemys();			// エネミー削除.
 
 	// ポジションのgetter/setter.
 	const VECTOR& GetPos() const { return pos; }
-	void SetPos(const VECTOR set, int n) { pos = set; }
+	void SetPos(const VECTOR _set, int _n) { pos = _set; }
 
 	// あたり判定半径の取得.
 	float GetHitRadius() { return hitRadius; }
 
-	//////フライパンかエネミーか判断する
-	//int enemypan[LINE_OBSTRUCT_RAW][LINE_OBSTRUCT_COL];
-
 	int floatModelSourceHandle;		//フライパンの大本のハンドル
 
 	// 指定番号の障害物を取得.
-	EnemyBase* GetEnemy(int raw, int col);
+	EnemyBase* GetEnemy(int _raw, int _col);
 
 
 private:
 
-	EnemyBase* enemys[LINE_OBSTRUCT_RAW][LINE_OBSTRUCT_COL];
+	class EnemyBase* m_enemys[LINE_OBSTRUCT_RAW][LINE_OBSTRUCT_COL];//	エネミーベースクラスへのポインタメンバ変数	
 	
 
-	int staticModelSourceHandle;	// 静止モデルの大本のハンドル.
+	int m_staticModelSourceHandle;	// 静止モデルの大本のハンドル.
 
 
 protected:

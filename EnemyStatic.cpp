@@ -7,10 +7,12 @@
 //-----------------------------------------------------------------------------
 // @brief  コンストラクタ.
 //-----------------------------------------------------------------------------
-EnemyStatic::EnemyStatic(int sourceModelHandle)
-	: EnemyBase(sourceModelHandle)
+EnemyStatic::EnemyStatic(int _sourceModelHandle)
+	: EnemyBase(_sourceModelHandle)
 {
+	// 座標の初期化
 	pos = VGet(0, 0, 0);
+	// 当たり判定の半径
 	hitRadius = 6.0f;
 }
 
@@ -27,7 +29,7 @@ EnemyStatic::~EnemyStatic()
 //-----------------------------------------------------------------------------
 void EnemyStatic::Update()
 {
-
+	// ポジションの更新
 	MV1SetPosition(modelHandle, pos);
 
 }

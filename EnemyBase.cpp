@@ -1,12 +1,11 @@
 #include "EnemyBase.h"
-//aaa
 
 #define USE_MODEL_DUPLICATE 1
 
 //-----------------------------------------------------------------------------
 // @brief  コンストラクタ.
 //-----------------------------------------------------------------------------
-EnemyBase::EnemyBase(int sourceModelHandle)
+EnemyBase::EnemyBase(int _sourceModelHandle)
 	: modelHandle(-1)
 	, hitRadius(-1)
 {
@@ -14,10 +13,10 @@ EnemyBase::EnemyBase(int sourceModelHandle)
 
 	// ３Ｄモデルの読み込み
 #if USE_MODEL_DUPLICATE
-	modelHandle = MV1DuplicateModel(sourceModelHandle);
+	modelHandle = MV1DuplicateModel(_sourceModelHandle);
 	if (modelHandle < 0)
 	{
-		printfDx("データ読み込みに失敗. sourceId:%d", sourceModelHandle);
+		printfDx("データ読み込みに失敗. sourceId:%d", _sourceModelHandle);
 	}
 #else
 	modelHandle = MV1LoadModel("data/model/Kawasaki/Kawasaki.pmx");

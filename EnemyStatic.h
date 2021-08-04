@@ -11,10 +11,10 @@
 class EnemyStatic : public EnemyBase
 {
 public:
-	EnemyStatic(int sourceModelHandle);		// コンストラクタ.
-	virtual ~EnemyStatic();					// デストラクタ.
+	EnemyStatic(int _sourceModelHandle);		// コンストラクタ.
+	virtual ~EnemyStatic();						// デストラクタ.
 
-	void Update();							// 更新.
+	void Update();								// 更新.
 };
 
 #endif // _OBSTACLE_BASE_H_

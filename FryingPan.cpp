@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 //  フライパンの処理
 //-----------------------------------------------------------------------------
-#include "Pan.h"
+#include "FryingPan.h"
 #include "Enemy.h"
 #include "EnemyStatic.h"
 #include "Player.h"
@@ -12,22 +12,25 @@
 //-----------------------------------------------------------------------------
 //  コンストラクタ.
 //-----------------------------------------------------------------------------
-Pan::Pan(int sourceModelHandle)
-    :EnemyBase(sourceModelHandle)
+FryingPan::FryingPan(int _sourceModelHandle)
+    :EnemyBase(_sourceModelHandle)
     , zcount(0)
 {
+    // ポジションの初期化
     pos = VGet(0, 0, 0);
-    rad = 0;
+    // sin移動のラジアン関数初期化
+    m_rad = 0;
+    // 当たり判定の半径
     hitRadius = 3.0f;
 
     // 投げる音読み込み
-    panSound = LoadSoundMem("data/Sound/Frypan.mp3");
+    m_panSound = LoadSoundMem("data/Sound/Frypan.mp3");
 
 }
 //-----------------------------------------------------------------------------
 //  デストラクタ.
 //-----------------------------------------------------------------------------
-Pan::~Pan()
+FryingPan::~FryingPan()
 {
     //処理なし
 }
@@ -36,28 +39,32 @@ Pan::~Pan()
 //-----------------------------------------------------------------------------
 //  更新.
 //-----------------------------------------------------------------------------
-void Pan::Update()
+void FryingPan::Update()
 {
-    rad += static_cast<float>((M_PI / 180) * 5);//static_castは暗黙の型変換を明示するもの。省略可
+    m_rad += static_cast<float>((M_PI / 180) * 5);//static_castは暗黙の型変換を明示するもの。省略可
 
     //yの高さ、上下の揺れを作る
-    pos.y = 10.0f + sinf(rad);
+    pos.y = 10.0f + sinf(m_rad);
 
-    //フライパンが‐100進んだら座標を100戻す
+
     zcount++;
+    //zcount(もしくはフライパンの座標)が200移動したら
     if (zcount == 200)
     {
+        // 移動した分の座標を戻す
         pos.z += 200;
         zcount = 0;
 
         // 音の再生を開始
-        PlaySoundMem(panSound, DX_PLAYTYPE_BACK);
+        PlaySoundMem(m_panSound, DX_PLAYTYPE_BACK);
     }
     else
     {
+        // zcountが1増えるとフライパンが1進む
         pos.z--;
     }
 
     //3Dモデルのポジション設定
     MV1SetPosition(modelHandle, pos);
 }
+

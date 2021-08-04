@@ -6,7 +6,7 @@
 class EnemyBase
 {
 public:
-	EnemyBase(int sourceModelHandle);		// コンストラクタ.
+	EnemyBase(int _sourceModelHandle);		// コンストラクタ.
 	virtual ~EnemyBase();					// デストラクタ.
 
 	virtual void Update() = 0;				// 更新.
@@ -17,7 +17,7 @@ public:
 
 	// ポジションのgetter/setter.
 	const VECTOR& GetPos() const { return pos; }
-	void SetPos(const VECTOR set) { pos = set; }
+	void SetPos(const VECTOR _set) { pos = _set; }
 	float GetHitRadius() { return hitRadius; }
 
 protected:
