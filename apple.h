@@ -16,8 +16,8 @@ class Apple;
 class Apple
 {
 public:
-	Apple();
-	~Apple();
+	Apple();// コンストラクタ.
+	~Apple();// デストラクタ
 
 	void Update();			// 更新.
 
@@ -28,15 +28,15 @@ public:
 
 	//ループ用
 	int i;
-	int getapplepoint;
+	int getapplepoint;//リンゴを取った数
 
 	void CreateApple();			//エネミー生成
 	void DestroyApple();		// エネミー削除.
-	EnemyBase* DestroyAppleHit(int raw,int col);
+	EnemyBase* DestroyAppleHit(int _raw,int _col);
 
 	// ポジションのgetter/setter.
 	const VECTOR& GetPos() const { return pos; }
-	void SetPos(const VECTOR set, int n) { pos = set; }
+	void SetPos(const VECTOR _set, int _n) { pos = _set; }
 
 	// あたり判定半径の取得.
 	float GetHitRadius() { return hitRadius; }
@@ -44,15 +44,16 @@ public:
 
 
 	// 指定番号の障害物を取得.
-	EnemyBase* GetApple(int raw, int col);
+	EnemyBase* GetApple(int _raw, int _col);
 
 
 private:
 
+	//リンゴの配列
 	EnemyBase* apple[LINE_OBSTRUCT_RAW][LINE_OBSTRUCT_COL];
 
 
-	int appleModelSourceHandle;		//appleの大本のハンドル
+	int m_appleModelSourceHandle;		//appleの大本のハンドル
 
 
 protected:

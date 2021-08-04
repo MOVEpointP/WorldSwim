@@ -33,13 +33,13 @@ public:
 
 private:
 	// カワサキの音
-	int hitOverSound;
+	int m_hitOverSound;
 	// ゲームオーバーの音
-	int OverSound;
+	int m_OverSound;
 	// 上二つの結合版
-	int kawasakiOverSound;
+	int m_kawasakiOverSound;
 	// ゲームシーンの音楽
-	int GameSceneSound;
+	int m_GameSceneSound;
 	// プレイヤーのポインタ
 	Player* player;
 	// カメラのポインタ
@@ -48,13 +48,13 @@ private:
 	Stage* stage;
 	//エネミーのポインタ
 	Enemy* enemy;
-
+	//リンゴのポインタ
 	Apple* apple;
-
-	MapChipClass* map;
-
+	//スコア表示のポインタ
+	MapChipClass* Score;
+	//ゴールまでの距離を表すゲージのポインタ
 	MapChipClass* gauge;
 
-	int kawasakicount;
+	int m_kawasakicount;
 };
 #endif	//_GAMESCENE_H_

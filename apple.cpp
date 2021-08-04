@@ -8,11 +8,11 @@
 //コンストラクタ
 //------------------------------------------------------------------------
 Apple::Apple()
-	:appleModelSourceHandle(NULL)
+	:m_appleModelSourceHandle(NULL)
 	,getapplepoint(0)
 {
 
-
+	//リンゴの配列にnullをいれている（初期化）
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
@@ -34,7 +34,7 @@ Apple::~Apple()
 void Apple::CreateApple()
 {
 	// ３Ｄモデルの読み込み
-	appleModelSourceHandle = MV1LoadModel("data/model/おりんご/りんご.pmx");
+	m_appleModelSourceHandle = MV1LoadModel("data/model/おりんご/りんご.pmx");
 
 
 
@@ -113,11 +113,11 @@ void Apple::CreateApple()
 		{
 			int* nowLine = lineMap[i];
 			// linemapに入っている数値によって障害物の種類を決定する.
-			if (nowLine[j] == 3)
+			if (nowLine[j] == 3)//3のところにリンゴの生成をする
 			{
-				apple[i][j] = new AppleStatic(appleModelSourceHandle);
+				apple[i][j] = new AppleStatic(m_appleModelSourceHandle);
 			}
-			else if (nowLine[j] == 0)
+			else if (nowLine[j] == 0)//それ以外はnullを入れる
 			{
 				apple[i][j] = NULL;
 			}
@@ -148,7 +148,7 @@ void Apple::CreateApple()
 //-----------------------------------------------------------------------------
 void Apple::DestroyApple()
 {
-
+	//生成したリンゴをデリートしてnullを入れる
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
@@ -205,15 +205,16 @@ void Apple::Draw()
 //-----------------------------------------------------------------------------
 // @brief  指定番号の障害物を取得.
 //-----------------------------------------------------------------------------
-EnemyBase* Apple::GetApple(int raw, int col)
+EnemyBase* Apple::GetApple(int _raw, int _col)
 {
-	return apple[raw][col];
+	return apple[_raw][_col];
 }
 
-EnemyBase* Apple::DestroyAppleHit(int raw, int col)
+EnemyBase* Apple::DestroyAppleHit(int _raw, int _col)
 {
-	delete(apple[raw][col]);
-	apple[raw][col] = NULL;
+	//プレイヤーがリンゴに当たったら、消す（デリート）。
+	delete(apple[_raw][_col]);
+	apple[_raw][_col] = NULL;
 	getapplepoint++;
-	return apple[raw][col];
+	return apple[_raw][_col];
 }
