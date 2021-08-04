@@ -1,36 +1,34 @@
 #include "Enemy.h"
 #include "EnemyBase.h"
 #include "EnemyStatic.h"
-#include "Pan.h"
+#include "Frypan.h"
 #include "apple.h"
-
-//プレイヤーをパクって作ってみる
 
 //------------------------------------------------------------------------
 //コンストラクタ
 //------------------------------------------------------------------------
 Enemy::Enemy()
 	: modelHandle(-1)
-	, i(0)
-	, staticModelSourceHandle(NULL)
+	, m_staticModelSourceHandle(NULL)
 	, floatModelSourceHandle(NULL)
 	, hitRadius(NULL)
 {
-
-
+	// エネミー初期化
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
 		{
-			enemys[i][j] = NULL;
+			m_enemys[i][j] = NULL;
 		}
 	}
 
+	// ポジション初期化
 	pos = VGet(0, 0, 0);
 }
 
 Enemy::~Enemy()
 {
+	// 処理なし
 }
 
 //-----------------------------------------------------------------------------
@@ -39,10 +37,8 @@ Enemy::~Enemy()
 void Enemy::CreateEnemy()
 {
 	// ３Ｄモデルの読み込み
-	staticModelSourceHandle = MV1LoadModel("data/model/Kawasaki/Kawasaki.pmx");
+	m_staticModelSourceHandle = MV1LoadModel("data/model/Kawasaki/Kawasaki.pmx");
 	floatModelSourceHandle = MV1LoadModel("data/model/Kawasaki/FryingPan.pmx");
-
-
 
 	// 障害物の配置図データとしてのlinemapを用意する.
 	int line1001[LINE_OBSTRUCT_COL] = { 0,0,0,1,0,1,0,1,0,1,0,0,1 };
@@ -120,34 +116,31 @@ void Enemy::CreateEnemy()
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
 		{
 			int* nowLine = lineMap[i];
-			// linemapに入っている数値によって障害物の種類を決定する.
-			if (nowLine[j] == 1)
-			{
-				enemys[i][j] = new EnemyStatic(staticModelSourceHandle);
-			}
-			if (nowLine[j] == 2)
-			{
-				enemys[i][j] = new Pan(floatModelSourceHandle);
-			}
-			else if (nowLine[j] == 0)
-			{
-				enemys[i][j] = NULL;
+			// linemapに入っている数値によって障害物の種類を決定、確保する.
+			switch (nowLine[j]) {
+			case 1:
+				m_enemys[i][j] = new EnemyStatic(m_staticModelSourceHandle);
+				break;
+			case 2:
+				m_enemys[i][j] = new Frypan(floatModelSourceHandle);
+				break;
+			case 0:
+				m_enemys[i][j] = NULL;
+				break;
 			}
 
-			// 位置の初期化.
-			if (enemys[i][j] != NULL)
+			//位置の初期化.
+			if (m_enemys[i][j] != NULL)
 			{
-				enemys[i][j]->SetPos(
-					VGet(
-						(OBSTRUCT_SPACE_W * j) - (OBSTRUCT_SPACE_W * LINE_OBSTRUCT_COL * 0.5f),
+				m_enemys[i][j]->SetPos
+				(
+					VGet((OBSTRUCT_SPACE_W * j) - (OBSTRUCT_SPACE_W * LINE_OBSTRUCT_COL * 0.5f),
 						0.0f,
 						(OBSTRUCT_SPACE_D * LINE_OBSTRUCT_RAW) - (OBSTRUCT_SPACE_D * i)
-					)
+						)
 				);
 			}
-
 		}
-
 	}
 
 }
@@ -158,15 +151,15 @@ void Enemy::CreateEnemy()
 //-----------------------------------------------------------------------------
 void Enemy::DestroyEnemys()
 {
-
+	// エネミーのメモリ解放
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
 		{
-			if (enemys[i][j] != NULL)
+			if (m_enemys[i][j] != NULL)
 			{
-				delete(enemys[i][j]);
-				enemys[i][j] = NULL;
+				delete(m_enemys[i][j]);
+				m_enemys[i][j] = NULL;
 			}
 		}
 	}
@@ -180,14 +173,14 @@ void Enemy::DestroyEnemys()
 //-----------------------------------------------------------------------------
 void Enemy::Update()
 {
+	// それぞれのlineMapの数値に応じてエネミーの更新
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
 		{
-			if (enemys[i][j] != NULL)
+			if (m_enemys[i][j] != NULL)
 			{
-				enemys[i][j]->Update();
-				
+				m_enemys[i][j]->Update();
 
 			}
 		}
@@ -199,13 +192,14 @@ void Enemy::Update()
 //------------------------------------------------------------------------
 void Enemy::Draw()
 {
+	// それぞれのlineMapの数値に応じてエネミーの描画
 	for (int i = 0; i < LINE_OBSTRUCT_RAW; i++)
 	{
 		for (int j = 0; j < LINE_OBSTRUCT_COL; j++)
 		{
-			if (enemys[i][j] != NULL)
+			if (m_enemys[i][j] != NULL)
 			{
-				enemys[i][j]->Draw();
+				m_enemys[i][j]->Draw();
 			}
 
 		}
@@ -215,8 +209,8 @@ void Enemy::Draw()
 //-----------------------------------------------------------------------------
 // @brief  指定番号の障害物を取得.
 //-----------------------------------------------------------------------------
-EnemyBase* Enemy::GetEnemy(int raw, int col)
+EnemyBase* Enemy::GetEnemy(int _raw, int _col)
 {
-	return enemys[raw][col];
+	return m_enemys[_raw][_col];
 }
 

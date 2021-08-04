@@ -28,9 +28,6 @@
     <ClCompile Include="EnemyBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Pan.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyStatic.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -55,6 +52,9 @@
     <ClCompile Include="AppleStatic.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="FryingPan.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -62,7 +62,6 @@
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Hitchecker.h" />
-    <ClInclude Include="Pan.h" />
     <ClInclude Include="EnemyStatic.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOver.h" />
@@ -74,5 +73,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="AppleStatic.h" />
     <ClInclude Include="fade.h" />
+    <ClInclude Include="FryingPan.h" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "HitChecker.h"
 #include "Stage.h"
-#include "Pan.h"
+#include "FryingPan.h"
 
 #include "SceneBase.h"
 #include "TitleScene.h"
@@ -16,7 +16,6 @@
 #include "GameClear.h"
 #include "GameOver.h"
 
-//aaa
 //-----------------------------------------------------------------------------
 // @brief  メイン関数.
 //-----------------------------------------------------------------------------
