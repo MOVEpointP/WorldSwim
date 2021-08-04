@@ -27,22 +27,22 @@ public:
 
 
 	// モデルハンドルの取得.
-	int GetModelHandle(){ return modelHandle; }
+	int GetModelHandle(){ return m_modelHandle; }
 
 	// ポジションのgetter/setter.
-	const VECTOR& GetPos() const { return pos; }
-	void SetPos(const VECTOR set) { pos = set; }
+	const VECTOR& GetPos() const { return m_pos; }
+	void SetPos(const VECTOR set) { m_pos = set; }
 
 	// ディレクションのgetter/setter.
-	const VECTOR& GetDir() const { return dir; }
-	void SetDir(const VECTOR set) { dir = set; }
+	const VECTOR& GetDir() const { return m_dir; }
+	void SetDir(const VECTOR set) { m_dir = set; }
 
 	// あたり判定半径の取得.
-	float GetHitRadius() { return hitRadius; }
+	float GetHitRadius() { return m_hitRadius; }
 
 	//ゴールの座標
 	VECTOR  goal;
-	VECTOR  goalnow;
+
 	//プレイヤーがゴールしているか
 	bool goalflag;
 	//敵に当たったかどうか、もしあったらゲームオーバー
@@ -50,32 +50,32 @@ public:
 
 	void rotationY();
 	bool GetRotateGameover() {
-		return rotateGameover;
+		return m_rotateGameover;
 	}
-	void SetRotateGameover(bool flag) { rotateGameover = flag; }
+	void SetRotateGameover(bool flag) { m_rotateGameover = flag; }
 
 
 private:
-	int		modelHandle, AttachIndex;;	// モデルハンドル.
-	VECTOR	pos;			// ポジション.
+	int		m_modelHandle, m_AttachIndex;;	// モデルハンドル.
+	VECTOR	m_pos;			// ポジション.
 
-	VECTOR	velocity;		// 移動力.
+	VECTOR	m_velocity;		// 移動力.
 
-	VECTOR	dir;			// 回転方向.
-	float	hitRadius;		// あたり判定の半径.
-	int overcount;
+	VECTOR	m_dir;			// 回転方向.
+	float	m_hitRadius;		// あたり判定の半径.
+	int m_overcount;
 
-	VECTOR  scale;
+	VECTOR  m_scale;
 
-	bool rotateGameover;
+	bool m_rotateGameover;
 	// 静的定数.
-	static const float ACCEL;
-	static const float MAX_SPEED;
-	static const float DEFAULT_DECEL;
-	static const float BREAK_DECEL;
-	static const float GRIP_DECEL;
-	static const float GRIP_POWER;
-	static const float COLIDE_DECEL_FAC;
+	static const float m_ACCEL;
+	static const float m_MAX_SPEED;
+	static const float m_DEFAULT_DECEL;
+	static const float m_BREAK_DECEL;
+	static const float m_GRIP_DECEL;
+	static const float m_GRIP_POWER;
+	static const float m_COLIDE_DECEL_FAC;
 };
 
 #endif // _PLAYER_H_

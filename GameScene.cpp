@@ -13,27 +13,27 @@
 
 // コンストラクタ
 GameScene::GameScene()
-	: hitOverSound(0)
+	: m_hitOverSound(0)
 	, player(nullptr)
 	, camera(nullptr)
 	, stage(nullptr)
 	,apple(nullptr)
-	, kawasakiOverSound(0)
-	, GameSceneSound(0)
-	, OverSound(0)
+	, m_kawasakiOverSound(0)
+	, m_GameSceneSound(0)
+	, m_OverSound(0)
 	,gauge(0)
 	,meter(0)
 	,now(0)
-	,kawasakicount(0)
+	,m_kawasakicount(0)
 	
 {
 	// 音ファイルを読み込み
-	hitOverSound = LoadSoundMem("data/Sound/kawasaki.wav");
+	m_hitOverSound = LoadSoundMem("data/Sound/kawasaki.wav");
 
-	OverSound = LoadSoundMem("data/Sound/Over.wav");
-	kawasakiOverSound = LoadSoundMem("data/Sound/kawasakiOver.wav");
+	m_OverSound = LoadSoundMem("data/Sound/Over.wav");
+	m_kawasakiOverSound = LoadSoundMem("data/Sound/kawasakiOver.wav");
 	// 音ファイルを読み込み(ゲームシーン）
-	GameSceneSound = LoadSoundMem("data/Sound/GameScene.wav");
+	m_GameSceneSound = LoadSoundMem("data/Sound/GameScene.wav");
 
 
 	// プレイヤーを生成.
@@ -48,12 +48,12 @@ GameScene::GameScene()
 	// エネミーを生成.
 	enemy = new Enemy();
 	enemy->CreateEnemy();
-
-	map = new MapChipClass();
-
+	//スコア表示を生成
+	Score = new MapChipClass();
+	//リンゴを生成
 	apple = new Apple();
 	apple->CreateApple();
-
+	//ゴールまでの距離を表すゲージを生成
 	gauge = new MapChipClass();
 
 	// ゲームシーンの音楽再生
@@ -67,18 +67,17 @@ GameScene::~GameScene()
 	delete(player);
 	// カメラを削除.
 	delete(camera);
-
+	//ステージを生成
 	delete(stage);
 
 	//// エネミーを削除.
 	enemy->DestroyEnemys();
-
 	delete(enemy);
-
-	delete(map);
-
+	//スコアを削除
+	delete(Score);
+	//リンゴを削除
 	delete(apple);
-
+	//ゲージを削除
 	delete(gauge);
 }
 
@@ -89,17 +88,17 @@ SceneBase* GameScene::Update()
 	player->Update();
 	// カメラ制御.
 	camera->Update(*player);
-
+	//ステージの制御
 	stage->Update();
 
 	//エネミー制御.
 	enemy->Update();
-
+	//リンゴの制御
 	apple->Update();
 
 	// ヒットのチェック.
 	HitChecker::Check(*player, *enemy);
-
+	//リンゴのヒットチェック
 	HitChecker::Checkapple(*player, *apple);
 
 
@@ -128,8 +127,8 @@ SceneBase* GameScene::Update()
 			player->SetRotateGameover(true);
 		}
 
-		kawasakicount++;
-		if (kawasakicount>240)
+		m_kawasakicount++;
+		if (m_kawasakicount>240)
 		{
 
 			// GameOverに遷移
@@ -159,23 +158,23 @@ void GameScene::Draw()
 	// エネミー描画.S
 	enemy->Draw();
 
-
+	//リンゴの描画
 	apple->Draw();
 
 
-
+	//リンゴを取った数を代入
 	int point = apple->getapplepoint;
-
+	//スコア表示
 	int score = point / 10;
 	int score2 = point % 10;
-	map->DrawArrayMapChip(0, score);
-	map->DrawArrayMapChip(1, score2);
-	map->DrawArrayMapChip(2, 0);
-	map->DrawArrayMapChip(3, 0);
+	Score->DrawArrayMapChip(0, score);
+	Score->DrawArrayMapChip(1, score2);
+	Score->DrawArrayMapChip(2, 0);
+	Score->DrawArrayMapChip(3, 0);
 
-
+	//ゲームが始まったらカウントする
 	now++;
-
+	//カウントが一定までくるとメーターが一つたまる
 	if (now==346)
 	{
 		meter++;

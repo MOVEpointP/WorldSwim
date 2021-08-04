@@ -7,27 +7,26 @@
 // @brief  コンストラクタ.
 //-----------------------------------------------------------------------------
 Stage::Stage()
-	: modelHandle2(-1)
-	, hitRadius(5.0f)
-	,modelHandlegoal(-1)
+	: m_stage(-1)
+	, m_hitRadius(5.0f)
+	,m_goal(-1)
 {
 	// ３Ｄモデルの読み込み
-	modelHandle2 = MV1LoadModel("data/model/stage3/Old Town.pmx");
-	modelHandlegoal = MV1LoadModel("data/インハイゴールゲート/★インハイゴールサイドパネルつき.pmx");
+	m_stage = MV1LoadModel("data/model/stage3/Old Town.pmx");
+	m_goal = MV1LoadModel("data/インハイゴールゲート/★インハイゴールサイドパネルつき.pmx");
 	
-	arrow = LoadGraph("data/texture/Arrow.png");
-	rightarrow = LoadGraph("data/texture/Right arrow.png");
-	leftarrow = LoadGraph("data/texture/Left arrow.png");
+	//矢印の画像読み込み
+	m_arrow = LoadGraph("data/texture/Arrow.png");
+	m_rightarrow = LoadGraph("data/texture/Right arrow.png");
+	m_leftarrow = LoadGraph("data/texture/Left arrow.png");
 
+	//プレイヤーのポジション
+	m_pos = VGet(0, 0, 0);
 
-	pos = VGet(0, 0, 0);
-	velocity = VGet(0, 0, 0);
-	dir = VGet(0, 0, 1);
+	m_goalpos= VGet(0, 0, 1200);
 
-	goalpos= VGet(0, 0, 1200);
-
-	MV1SetScale(modelHandle2, VGet(1.0f, 1.0f, 2.0f));//ステージ長くしてるよ
-	MV1SetScale(modelHandlegoal, VGet(2.0f, 1.0f, 2.0f));//ゴールゲート長くしてるよ
+	MV1SetScale(m_stage, VGet(1.0f, 1.0f, 2.0f));//ステージ長くしてるよ
+	MV1SetScale(m_goal, VGet(2.0f, 1.0f, 2.0f));//ゴールゲート長くしてるよ
 
 }
 
@@ -37,8 +36,8 @@ Stage::Stage()
 Stage::~Stage()
 {
 	// モデルのアンロード.
-	MV1DeleteModel(modelHandle2);
-	MV1DeleteModel(modelHandlegoal);
+	MV1DeleteModel(m_stage);
+	MV1DeleteModel(m_goal);
 
 }
 
@@ -47,21 +46,12 @@ Stage::~Stage()
 //-----------------------------------------------------------------------------
 void Stage::Update()
 {
-	// キー入力取得
-	int Key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-
-	// 加速処理.
-	VECTOR accelVec = VGet(0, 0, 0);
-
-
-	// ベロシティ加速計算.
-	velocity = VAdd(velocity, accelVec);
 
 
 	// ３Dモデルのポジション設定
-	MV1SetPosition(modelHandle2, pos);
+	MV1SetPosition(m_stage, m_pos);
 
-	MV1SetPosition(modelHandlegoal, goalpos);
+	MV1SetPosition(m_goal, m_goalpos);
 
 
 }
@@ -72,20 +62,20 @@ void Stage::Update()
 void Stage::Draw()
 {
 	// ３Ｄモデルの描画
-	MV1DrawModel(modelHandle2);
-	MV1DrawModel(modelHandlegoal);
+	MV1DrawModel(m_stage);
+	MV1DrawModel(m_goal);
 
-	DrawGraph(0, 0, arrow, true);//常に出る矢印のアイコン
+	DrawGraph(0, 0, m_arrow, true);//常に出る矢印のアイコン
 		// キー入力取得
 	int Key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
 	if (Key & PAD_INPUT_LEFT)//もし、右キーが入力されたらアイコンに色がつく
 	{
-		DrawGraph(0, 0, leftarrow, true);
+		DrawGraph(0, 0, m_leftarrow, true);
 	}
 	if (Key & PAD_INPUT_RIGHT)//もし、右キーが入力されたらアイコンに色がつく
 	{
-		DrawGraph(0, 0, rightarrow, true);
+		DrawGraph(0, 0, m_rightarrow, true);
 	}
 
 }

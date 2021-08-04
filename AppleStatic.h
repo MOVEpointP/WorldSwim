@@ -7,7 +7,7 @@
 class AppleStatic : public EnemyBase
 {
 public:
-	AppleStatic(int sourceModelHandle);		// コンストラクタ.
+	AppleStatic(int _sourceModelHandle);		// コンストラクタ.
 	virtual ~AppleStatic();					// デストラクタ.
 
 

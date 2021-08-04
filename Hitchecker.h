@@ -12,8 +12,9 @@ class Apple;
 class HitChecker
 {
 public:
-
+	//エネミーのチェックヒット
 	static void Check(Player& player, Enemy& enemy);
+	//りんごのチェックヒット
 	static void Checkapple(Player& player, Apple& apple);
 
 };

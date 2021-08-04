@@ -48,11 +48,12 @@ SceneBase* GameOver::Update()
 // 描画処理
 void GameOver::Draw()
 {
-
+	//ゲームオーバーの画像のコマ送りの処理
 	change++;
 
 	if (change >= 50)
 	{
+		//一定の数までカウントしたら、画像が切り替わる、そのあとカウントを初期化
 		count++;
 
 		number = count % 2;

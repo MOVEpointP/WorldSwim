@@ -17,32 +17,32 @@ public:
 
 
 	// モデルハンドルの取得.
-	int GetModelHandle() { return modelHandle2; }
+	int GetModelHandle() { return m_stage; }
 
 	// ポジションのgetter/setter.
-	const VECTOR& GetPos() const { return pos; }
-	void SetPos(const VECTOR set) { pos = set; }
+	const VECTOR& GetPos() const { return m_pos; }
+	void SetPos(const VECTOR set) { m_pos = set; }
 
 	// ディレクションのgetter/setter.
-	const VECTOR& GetDir() const { return dir; }
-	void SetDir(const VECTOR set) { dir = set; }
+	const VECTOR& GetDir() const { return m_dir; }
+	void SetDir(const VECTOR set) { m_dir = set; }
 
 
 private:
-	int		modelHandle2;		// モデルハンドル.
-	VECTOR	pos;				// ポジション.
+	int		m_stage;		// モデルハンドル.
+	VECTOR	m_pos;				// ポジション.
 
-	int		modelHandlegoal;	// モデルハンドル.
-	VECTOR	goalpos;			// ポジション.
+	int		m_goal;	// モデルハンドル.
+	VECTOR	m_goalpos;			// ポジション.
 
-	VECTOR	velocity;			// 移動力.
+	VECTOR	m_velocity;			// 移動力.
 
-	VECTOR	dir;				// 回転方向.
-	float	hitRadius;			// あたり判定の半径.
+	VECTOR	m_dir;				// 回転方向.
+	float	m_hitRadius;			// あたり判定の半径.
 
-	int     arrow;				//矢印
-	int		rightarrow;			//右矢印
-	int		leftarrow;			//左矢印
+	int     m_arrow;				//矢印
+	int		m_rightarrow;			//右矢印
+	int		m_leftarrow;			//左矢印
 
 };
 

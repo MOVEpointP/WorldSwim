@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------
 // @brief  ヒットチェック処理.
 //-----------------------------------------------------------------------------
-
+//プレイヤーと敵のヒットチェック処理
 void HitChecker::Check(Player& player, Enemy& enemy)
 {
 	// Z軸とX軸の二次元座標としてあたり判定を行う.
@@ -54,6 +54,7 @@ void HitChecker::Check(Player& player, Enemy& enemy)
 		}
 	}
 }
+//プレイヤーとりんごのヒットチェック処理
 
 void HitChecker::Checkapple(Player& player, Apple& apple)
 {
@@ -79,7 +80,7 @@ void HitChecker::Checkapple(Player& player, Apple& apple)
 					VECTOR playerToObs = VSub(yZeroObstruct, yZeroPlayer);
 					if (VSize(playerToObs) < player.GetHitRadius() + obstruct->GetHitRadius())
 					{
-						//printfDx("Hit!");
+						//もし、プレイヤーがリンゴと重なったらリンゴを消す処理をする
 						player.OnHitObstructApple(*obstruct);
 						isHit = true;
 						obstruct = apple.DestroyAppleHit(i, j);
@@ -91,7 +92,6 @@ void HitChecker::Checkapple(Player& player, Apple& apple)
 			// ヒットしてたら計算やりなおし+二次元座標としてのプレイヤーの位置を更新.@@@ここでゲームオーバーの方にもっていってほしい
 			if (isHit)
 			{
-				//player.pointUp = true;
 				yZeroPlayer = VGet(player.GetPos().x, 0, player.GetPos().z);
 				break;
 			}

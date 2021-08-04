@@ -3,13 +3,13 @@
 //-----------------------------------------------------------------------------
 // @brief  コンストラクタ.
 //-----------------------------------------------------------------------------
-AppleStatic::AppleStatic(int sourceModelHandle)
-	: EnemyBase(sourceModelHandle)
+AppleStatic::AppleStatic(int _sourceModelHandle)
+	: EnemyBase(_sourceModelHandle)
 {
 	
-	hitRadius = 6.0f;
-	pos = VGet(0.2f, 0.2f, 0.2f);
-	MV1SetScale(modelHandle, pos);
+	hitRadius = 6.0f;//当たり判定の半径
+	pos = VGet(0.2f, 0.2f, 0.2f);//リンゴのサイズを調整
+	MV1SetScale(modelHandle, pos);//調整した値をモデルに設定した
 }
 
 //-----------------------------------------------------------------------------
@@ -26,6 +26,6 @@ AppleStatic::~AppleStatic()
 void AppleStatic::Update()
 {
 
-	MV1SetPosition(modelHandle, pos);
+	MV1SetPosition(modelHandle, pos);//モデルの座標をセット
 
 }
